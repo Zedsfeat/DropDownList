@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var dropDownManager = DropDownManager()
+    
     var body: some View {
         DropDownListView()
+            .onAppearDropDown()
+            .environmentObject(dropDownManager)
     }
 }
 

@@ -8,8 +8,8 @@
 import Foundation
 
 struct Opinion: Identifiable {
-    let id = UUID()
-    let descriptionOpinions: [DescriptionOpinion]
+    let id = UUID().uuidString
+    let descriptions: [DescriptionOpinion]
 }
 
 struct DescriptionOpinion {
