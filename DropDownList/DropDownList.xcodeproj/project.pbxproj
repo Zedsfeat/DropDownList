@@ -73,13 +73,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		438B7B5E2B1B594C00EB2EAB /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		438B7B632B1B59AB00EB2EAB /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,10 +102,9 @@
 			children = (
 				43BBB5B62B1B3F0500901BE8 /* DropDownListApp.swift */,
 				43BBB5B82B1B3F0500901BE8 /* ContentView.swift */,
+				438B7B592B1B591A00EB2EAB /* Model */,
 				43EB658F2B1CB1DB00C0FF59 /* View */,
 				4313EA362B1BAF7900939C95 /* Helpers */,
-				438B7B592B1B591A00EB2EAB /* Model */,
-				438B7B5E2B1B594C00EB2EAB /* View */,
 				438B7B632B1B59AB00EB2EAB /* Styles */,
 				43BBB5BA2B1B3F0600901BE8 /* Assets.xcassets */,
 				43BBB5BC2B1B3F0600901BE8 /* Preview Content */,
