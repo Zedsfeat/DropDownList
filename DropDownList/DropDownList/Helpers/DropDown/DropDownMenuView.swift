@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct DropDownMenuView: View {
-    @EnvironmentObject private var dropDownManager: DropDownManager
+    @Binding var items: [Opinion]
+    @Binding var selectedItem: Opinion?
     
     var body: some View {
-        ScrollViewReader { proxy in
+        if let selectedItem {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 4) {
-                    ForEach(dropDownManager.selectedDescriptions.indices, id: \.self) { index in
+                    ForEach(selectedItem.descriptions.indices, id: \.self) { index in
                         Button {
                             swapElements(index: index)
-                            dropDownManager.selectedItem = nil
                         } label: {
-                            Text("\(dropDownManager.selectedDescriptions[index].title)")
+                            Text("\(selectedItem.descriptions[index])")
                                 .font(.system(.headline, weight: .regular))
                                 .foregroundColor(.black)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -28,17 +28,14 @@ struct DropDownMenuView: View {
                     }
                 }
                 .padding(2)
-                .id("topId")
             }
-            .frame(width: UIScreen.main.bounds.width - 60)
-            .background(getBackground(isShadowed: true))
-            .frame(height: dropDownManager.selectedDescriptions.count > 4 ? 210 : nil)
+            .background(background)
+            .frame(height: selectedItem.descriptions.count > 4 ? 210 : nil)
             .fixedSize(horizontal: false, vertical: true)
-            .onAppear { proxy.scrollTo("topId", anchor: .top) }
         }
     }
     
-    private func getBackground(isShadowed: Bool = false) -> some View {
+    private var background: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(.white)
@@ -47,17 +44,18 @@ struct DropDownMenuView: View {
                 .stroke(lineWidth: 1)
                 .fill(Color(.systemGray3))
         }
-        .shadow(color: .black.opacity(isShadowed ? 0.1 : 0), radius: 5)
+        .shadow(color: .black.opacity(0.1), radius: 5)
     }
     
+    // MARK: Helpers
+    
     private func swapElements(index: Int) {
-        guard index > 0 && index <= dropDownManager.selectedDescriptions.count else { return }
-        let firstElement = dropDownManager.selectedDescriptions[0]
-        dropDownManager.selectedDescriptions[0] = dropDownManager.selectedDescriptions[index]
-        dropDownManager.selectedDescriptions[index] = firstElement
+        defer { selectedItem = nil }
+        if let firstIndex = items.firstIndex(where: { selectedItem?.id == $0.id }) {
+            guard index > 0 && index <= items[firstIndex].descriptions.count else { return }
+            let firstElement = items[firstIndex].descriptions[0]
+            items[firstIndex].descriptions[0] = selectedItem?.descriptions[index] ?? ""
+            items[firstIndex].descriptions[index] = firstElement
+        }
     }
-}
-
-#Preview {
-    ContentView()
 }

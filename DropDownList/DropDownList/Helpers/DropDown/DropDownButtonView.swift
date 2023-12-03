@@ -1,5 +1,5 @@
 //
-//  DropDownRowView.swift
+//  DropDownButtonView.swift
 //  DropDownList
 //
 //  Created by Rishat Zinatullin on 02.12.2023.
@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-struct DropDownRowView: View {
-    let item: Opinion
-    @EnvironmentObject private var dropDownManager: DropDownManager
-    private var condition: Bool { dropDownManager.selectedItem?.id == item.id }
-    private var imageName: String { "chevron.\(condition ? "up" : "down")" }
+struct DropDownButtonView: View {
+    private var imageName: String { "chevron.\(selectedItem == item ? "up" : "down")" }
+    var item: Opinion
+    @Binding var selectedItem: Opinion?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -20,7 +19,7 @@ struct DropDownRowView: View {
                 .padding(.horizontal, 8)
             
             HStack {
-                Text(item.descriptions.first?.title ?? "")
+                Text(item.descriptions.first ?? "")
                     .font(.system(.headline, weight: .regular))
                     .foregroundColor(.black)
                 
@@ -34,8 +33,8 @@ struct DropDownRowView: View {
             }
             .padding(16)
             .background(background)
+            .onTapDropDownButton(item: item, selectedItem: $selectedItem)
         }
-        .onTapDropDown(item: item)
     }
     
     private var background: some View {
@@ -48,8 +47,4 @@ struct DropDownRowView: View {
                 .fill(Color(.systemGray3))
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

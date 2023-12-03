@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct Opinion: Identifiable {
+struct Opinion: Identifiable, Equatable {
     let id = UUID().uuidString
-    let descriptions: [DescriptionOpinion]
-}
-
-struct DescriptionOpinion {
-    let title: String
+    var descriptions: [String]
 }
